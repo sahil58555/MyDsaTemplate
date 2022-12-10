@@ -79,46 +79,37 @@ class FastReader
     	void solver()
     	{
     	    
-    	    FastReader fr = new FastReader();
-    	    int t = fr.nextInt();
-    	   
-    	    sb = new StringBuilder();
-    	   
-    	    while(t-- > 0)
-    	    {
-    	       int n = fr.nextInt();
-			   int[] a = fr.getArr(n);
-			   Arrays.sort(a);
-			   int c = 0;
-			   long mod = 998244353;
+    	    List<Integer> l = new ArrayList<>();
+			l.add(4);
+			l.add(3);
+			l.add(2);
+			l.add(1);
+			//l.add(4);
 
-			   for(int ele : a) {
-
-					if(ele == 1) c++;
-			   }
-
-			   long ans = 1;
-
-			   for(int ele : a) {
-
-					if(ele % 2 == 0 && c > 0) {
-
-						c--;
-						ele++;
-						ans = (ans * ele) % mod;
-					}
-					else {
-					
-						ans = (ans * ele) % mod;
-					}
-			   }
-
-			   sb.append(ans+"\n");
-    	    }
-    	    
-    	    System.out.println(sb);
+    	    System.out.println(maxTrailing(l));
+    	   // System.out.println(Arrays.toString(funcBouquet(new int[]{7,43,12,4,1,3,78,6}, 4)));
     	}
     	
+		public static int[] funcBouquet(int[] flowerStick, int random) {
+
+			int n = flowerStick.length;
+			Arrays.sort(flowerStick);
+			int[] ans = new int[n];
+			int idx = 0;
+
+			for(int i = 0 ; i < random ; i++) {
+
+				ans[idx++] = flowerStick[i]; 
+			}
+
+			for(int i = n - 1 ; i >= random ; i--) {
+
+				ans[idx++] = flowerStick[i];
+			}
+
+			return ans;
+		}
+
         void sort(int[] a)
     	{
     	    ArrayList<Integer> list = new ArrayList<>(a.length);
@@ -144,5 +135,76 @@ class FastReader
         {
             return (a / gcd(a, b)) * b;
         }
+
+		public static int maxTrailing(List<Integer> arr) {
+
+			int max = Integer.MIN_VALUE;
+			int min = arr.get(0);
+
+			for(int i = 1 ; i < arr.size() ; i++) {
+
+				if(min < arr.get(i)) {
+
+					max = Math.max(max, arr.get(i) - min);
+				}
+
+				min = Math.min(min, arr.get(i));
+			}
+
+			if(max == Integer.MIN_VALUE) return -1;
+
+			return max;
+		}
     }
 
+	// import java.util.*;
+	// import java.lang.*;
+	// import java.io.*;
+	
+	// /*
+	//  * 
+	//  */
+	// public class Solution
+	// {
+	//   public static int[]  funcBouquet(int[] flowerStick, int random)
+	//   {
+	// 	int n = flowerStick.length;
+	// 	Arrays.sort(flowerStick);
+	// 	int[] ans = new int[n];
+	// 	int idx = 0;
+
+	// 	for(int i = 0 ; i < random ; i++) {
+
+	// 		ans[idx++] = flowerStick[i]; 
+	// 	}
+
+	// 	for(int i = n - 1 ; i >= random ; i--) {
+
+	// 		ans[idx++] = flowerStick[i];
+	// 	}
+
+	// 	return ans;
+	//   }
+	
+	//   public static void main(String[] args)
+	//   {
+	// 	Scanner in = new Scanner(System.in);
+	// 	//input for flowerStick
+	// 	int flowerStick_size = in.nextInt();
+	// 	int flowerStick[] = new int[flowerStick_size];
+	// 	for(int idx = 0; idx < flowerStick_size; idx++)
+	// 	{
+	// 	  flowerStick[idx] = in.nextInt();
+	// 	}
+	// 	// input for random
+	// 	int random = in.nextInt();
+		
+		
+	// 	int[] result = funcBouquet(flowerStick, random);
+	// 	for(int idx = 0; idx < result.length - 1; idx++)
+	// 	{
+	// 	  System.out.print(result[idx] + " ");
+	// 	}
+	// 	System.out.print(result[result.length - 1]);
+	//   }
+	// }
